@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The first function creates a special list. This list contents a matrix and
+## the inverse of the matrix (optional)
+## The second function store the resolve of the inverse of the matrix 
 
-## Write a short comment describing this function
+## Create a list for store a matrix and the inverse of the matrix (optional)
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  inMa <- NULL 
+  set <- function(y){
+    x <<- y
+    inverseMatrix <<- NULL 
+  }
+  get <- function() x
+  setInverseMatrix <- function(inverseMatrix) inMa <<- inverseMatrix
+  getInverseMatrix <- function() inMa
+  list(set = set, get = get,
+       setInverseMatrix = setInverseMatrix,
+       getInverseMatrix = getInverseMatrix)
 }
 
 
-## Write a short comment describing this function
+## Store the resolve of the inverse of a matrix 
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  inMa <- x$getInverseMatrix()
+  if(!is.null(inMa)){
+    message("getting cached data")
+    return(inMa)
+  }
+  matrix <- x$get()
+  inMa <- solve(matrix)
+  x$setInverseMatrix(inMa)
+  inMa
 }
